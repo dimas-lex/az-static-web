@@ -20,6 +20,10 @@
   margin-top: 15px;
 }
 
+.input {
+  margin-left: 5px;
+}
+
 .status {
   height: 30px;
   width: 100%;
@@ -28,6 +32,8 @@
 .info, .table {
   width: 100%;
   height: auto;
+  background-color: #F5F5F5;
+  border-collapse: collapse;
 }
 
 .header {

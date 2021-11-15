@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { put, delay, takeEvery } from 'redux-saga/effects';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { put, delay, takeEvery, debounce } from 'redux-saga/effects';
 import { RootState } from '../../app/store';
 import { fetchRates } from './ratesApi';
 
@@ -24,16 +24,14 @@ const initialState: WeatherState = {
   rates: [],
 };
 
+export const updateQuantity = createAction<number>('rates/updateQuantity')
 export const getRates = createAsyncThunk(
   'rates/getRates',
   async (_, thunkApi) => {
     const state = thunkApi.getState() as RootState;
     try {
-
       const response = await fetchRates(state.rates.quantity);
-      console.log({response})
       return response;
-
     } catch (err) {
       console.log(err)
       thunkApi.rejectWithValue(err)
@@ -57,9 +55,13 @@ export const weatherSlice = createSlice({
         state.status = 'fulfilled';
         state.rates = action.payload;
       })
+      .addCase(updateQuantity, (state, action) => {
+        state.quantity = action.payload;
+      })
   }
 });
 
+export const selectQuantity = (state: RootState) => state.rates.quantity;
 export const selectStatus = (state: RootState) => state.rates.status;
 export const selectRates = (state: RootState) => state.rates.rates;
 
@@ -69,8 +71,13 @@ function* onFetchRatesSaga() {
   yield put(getRates() as any);
 }
 
+function* onUpdateQuantity() {
+  yield put(getRates() as any);
+}
+
 export function* fetchRatesSaga() {
   yield takeEvery(getRates.fulfilled, onFetchRatesSaga);
+  yield debounce(500, updateQuantity, onUpdateQuantity)
 }
 
 export default weatherSlice.reducer;
