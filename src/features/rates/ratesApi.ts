@@ -1,14 +1,14 @@
 import config from '../../config';
 
-export const fetchWeather = async (country?: string, city?: string): Promise<any> => {
-  const responseTxt = await fetch(`${config.API}/weather?city=${city}&country=${country}&key=123`);
+export const fetchRates = async (quantity: number): Promise<any> => {
+  const responseTxt = await fetch(`${config.API}/api?quantity=${quantity}&key=123`);
   const response = await responseTxt.json();
 
   if (!response.success) {
     throw new Error('Incorrect response'); }
 
   if (Array.isArray(response.data)) {
-    return response.data[0];
+    return response.data;
   }
 
   throw new Error('Incorrect response');

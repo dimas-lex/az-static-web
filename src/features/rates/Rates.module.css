@@ -1,0 +1,38 @@
+.rates {
+  width: 100%;
+  height: auto;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  background-color:#F2F2F2;
+  font-size: 14px;
+  position: relative;
+  color:   #F29544;
+}
+
+.title {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.status {
+  height: 30px;
+  width: 100%;
+}
+
+.info, .table {
+  width: 100%;
+  height: auto;
+}
+
+.header {
+  background-color: #BFB99B;
+  color: #F2F2F2;
+  text-transform: uppercase;
+  padding: 3px;
+}
