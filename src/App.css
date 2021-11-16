@@ -2,4 +2,18 @@
   text-align: center;
   box-sizing: border-box;
   font-family: 'PT Sans', sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.AppRates {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.AppRateDetail {
+  height: 200px;
 }

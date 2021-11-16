@@ -20,12 +20,13 @@ export const Weather = () => {
   }
 
   return (
-    <div className={styles.weather}>
-      <div className={styles.title}>Weather Info</div>
+    <div className={`${styles.weather} weather `}>
+      <div className={`${styles.title} weather-title `}>Weather Info</div>
+
       <div className={styles.selector}>
         <label className={styles.label}>
           Country:
-          <select className={styles.select} onChange={onCountryChange} value={country}>
+          <select className={`${styles.select} weather-country `} onChange={onCountryChange} value={country}>
                 {countries.map(country => (
                     <option key={country.code} value={country.code}>
                         {country.name}
@@ -33,12 +34,14 @@ export const Weather = () => {
                 ))}
             </select>
         </label>
+
         <label className={styles.label}>
           City:
-          <input className={styles.input} type="text" name="city" value={city} onChange={onCityChange} />
+          <input className={`${styles.input} weather-city `} type="text" name="city" value={city} onChange={onCityChange} />
         </label>
       </div>
-      <div className={styles.info}>
+
+      <div className={`${styles.info} weather-info `}>
         {
           status === 'fulfilled' && (
             <>

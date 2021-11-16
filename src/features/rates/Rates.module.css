@@ -1,7 +1,5 @@
 .rates {
   width: 100%;
-  height: auto;
-  min-height: calc(100vh - 100px);
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -9,7 +7,7 @@
   background-color:#F2F2F2;
   font-size: 14px;
   position: relative;
-  color:   #F29544;
+  color: #F29544;
 }
 
 .title {

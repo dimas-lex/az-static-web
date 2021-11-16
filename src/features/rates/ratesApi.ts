@@ -1,7 +1,5 @@
-import config from '../../config';
-
 export const fetchRates = async (quantity: number): Promise<any> => {
-  const responseTxt = await fetch(`${config.API}/api?quantity=${quantity}&key=123`);
+  const responseTxt = await fetch(`/api/rates?quantity=${quantity}&key=123`);
   const response = await responseTxt.json();
 
   if (!response.success) {

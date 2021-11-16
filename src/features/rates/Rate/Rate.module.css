@@ -5,4 +5,9 @@
   font-size: 13px;
   position: relative;
   color:   #F29544;
+  cursor: pointer;
+}
+
+.rate:hover {
+  background-color:#F2F2F2;
 }

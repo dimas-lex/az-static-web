@@ -5,19 +5,19 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectStatus, selectRates, selectQuantity, updateQuantity } from './ratesSlice';
 import { Rate } from './Rate';
 
-export const Rates = () => {
+export const Rates = ({className}: {className?: string}) => {
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectStatus);
   const rates = useAppSelector(selectRates);
   const quantity = useAppSelector(selectQuantity);
 
   const onChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = parseInt(e.target.value, 10)
+    const val = parseInt(e.target.value, 10);
     dispatch(updateQuantity(val));
   };
 
   return (
-    <div className={styles.rates}>
+    <div className={`${styles.rates} ${className || ''}`}>
       <div className={styles.title}>
         Rates Info for
         <input className={styles.input} type="number" name="quantity" value={quantity} onChange={onChangeQuantity} />

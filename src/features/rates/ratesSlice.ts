@@ -10,21 +10,28 @@ export type TRate = {
   name: string;
   timestamp: number;
   value: number;
+  subValue: number;
+  description: string;
 }
 
-export interface WeatherState {
+export interface RateState {
   quantity: number,
   status: 'idle' | 'loading' | 'failed' | 'fulfilled';
   rates?: Array<TRate>;
+  selectedRate: TRate | null;
 };
 
-const initialState: WeatherState = {
+const initialState: RateState = {
   quantity: 123,
   status: 'idle',
   rates: [],
+  selectedRate: null,
 };
 
-export const updateQuantity = createAction<number>('rates/updateQuantity')
+export const rateDetailClosed = createAction('rates/rateDetailClosed');
+export const rateSelected = createAction<TRate["id"]>('rates/rateSelected');
+export const updateQuantity = createAction<number>('rates/updateQuantity');
+
 export const getRates = createAsyncThunk(
   'rates/getRates',
   async (_, thunkApi) => {
@@ -45,9 +52,10 @@ export const weatherSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getRates.pending, (state) => {
-      state.status = 'loading';
-    })
+    builder
+      .addCase(getRates.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(getRates.rejected, (state) => {
         state.status = 'failed';
       })
@@ -58,12 +66,21 @@ export const weatherSlice = createSlice({
       .addCase(updateQuantity, (state, action) => {
         state.quantity = action.payload;
       })
+      .addCase(rateDetailClosed, (state) => {
+        state.selectedRate = null;
+      })
+      .addCase(rateSelected, (state, action) => {
+        const id = action.payload;
+        const rate = state.rates?.find(r => r.id === id);
+        state.selectedRate = rate ? rate : null;
+      })
   }
 });
 
 export const selectQuantity = (state: RootState) => state.rates.quantity;
 export const selectStatus = (state: RootState) => state.rates.status;
 export const selectRates = (state: RootState) => state.rates.rates;
+export const selectSelectedRate = (state: RootState) => state.rates.selectedRate;
 
 
 function* onFetchRatesSaga() {
