@@ -25,7 +25,7 @@ module.exports = async function (context, req) {
     const data = await response.json();
 
     context.res = {
-        body: { success: true, ...data, env: process.env },
+        body: { success: true, ...data },
     };
     return;
 }
