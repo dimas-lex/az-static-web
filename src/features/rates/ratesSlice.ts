@@ -1,9 +1,9 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { put, delay, takeEvery, debounce } from 'redux-saga/effects';
 import { RootState } from '../../app/store';
-import { fetchRates } from './ratesApi';
+import { fetchRates, submitRateApi } from './ratesApi';
 
-export type TRate = {
+export interface IRate  {
   betaId: string;
   currency: "EURO" | "USD";
   id: string;
@@ -14,11 +14,20 @@ export type TRate = {
   description: string;
 }
 
+export interface ISubmitRate {
+  firstName: string;
+  lastName: string;
+  email: string;
+  value: number;
+  age: number;
+  phone: number;
+}
 export interface RateState {
   quantity: number,
   status: 'idle' | 'loading' | 'failed' | 'fulfilled';
-  rates?: Array<TRate>;
-  selectedRate: TRate | null;
+  rates?: Array<IRate>;
+  selectedRate: IRate | null;
+  isAddRateVisible: boolean;
 };
 
 const initialState: RateState = {
@@ -26,10 +35,12 @@ const initialState: RateState = {
   status: 'idle',
   rates: [],
   selectedRate: null,
+  isAddRateVisible: false,
 };
 
+export const toggleAddRateVisibility = createAction('rates/toggleAddRateVisibility');
 export const rateDetailClosed = createAction('rates/rateDetailClosed');
-export const rateSelected = createAction<TRate["id"]>('rates/rateSelected');
+export const rateSelected = createAction<IRate["id"]>('rates/rateSelected');
 export const updateQuantity = createAction<number>('rates/updateQuantity');
 
 export const getRates = createAsyncThunk(
@@ -46,6 +57,15 @@ export const getRates = createAsyncThunk(
   }
 )
 
+export const submitRate = createAsyncThunk(
+  'rates/submitRate',
+  async (rate: ISubmitRate) => {
+    console.log(rate)
+
+    return await submitRateApi(rate as any as ISubmitRate);
+  }
+)
+
 
 export const weatherSlice = createSlice({
   name: "Weather",
@@ -53,11 +73,17 @@ export const weatherSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(submitRate.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(getRates.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(getRates.rejected, (state) => {
         state.status = 'failed';
+      })
+      .addCase(submitRate.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
       })
       .addCase(getRates.fulfilled, (state, action) => {
         state.status = 'fulfilled';
@@ -68,6 +94,9 @@ export const weatherSlice = createSlice({
       })
       .addCase(rateDetailClosed, (state) => {
         state.selectedRate = null;
+      })
+      .addCase(toggleAddRateVisibility, (state) => {
+        state.isAddRateVisible = !state.isAddRateVisible;
       })
       .addCase(rateSelected, (state, action) => {
         const id = action.payload;
@@ -81,6 +110,7 @@ export const selectQuantity = (state: RootState) => state.rates.quantity;
 export const selectStatus = (state: RootState) => state.rates.status;
 export const selectRates = (state: RootState) => state.rates.rates;
 export const selectSelectedRate = (state: RootState) => state.rates.selectedRate;
+export const selectIsAddRateVisible = (state: RootState) => state.rates.isAddRateVisible;
 
 
 function* onFetchRatesSaga() {

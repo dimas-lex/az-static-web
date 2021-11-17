@@ -4,6 +4,7 @@ import React, { ChangeEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectStatus, selectRates, selectQuantity, updateQuantity } from './ratesSlice';
 import { Rate } from './Rate';
+import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
 
 export const Rates = ({className}: {className?: string}) => {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export const Rates = ({className}: {className?: string}) => {
       </div>
       <div className={styles.status}>
         {
-          status === 'loading' && ('loading')
+          status === 'loading' && <ProgressBar />
         }
         {
           status === 'failed' && ('Request failed')

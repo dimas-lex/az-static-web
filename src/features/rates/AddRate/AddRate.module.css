@@ -1,0 +1,8 @@
+.form {
+  margin: 30px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.input {
+  margin-top: 10px;
+}

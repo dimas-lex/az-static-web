@@ -4,6 +4,7 @@ import React, { ChangeEvent } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectStatus, selectCountry, selectCity, selectForecast, changeLocation } from './weatherSlice';
 import countries from '../../common/countries.json';
+import { Spinner } from '../../components/Spinner';
 
 export const Weather = () => {
   const dispatch = useAppDispatch();
@@ -50,11 +51,8 @@ export const Weather = () => {
             </>
           )
         }
+        <Spinner  isVisible={status === 'loading'} />
         {
-          status === 'loading' && (
-            'loading'
-          )
-        }  {
           status === 'failed' && ( 'Request failed' )
         }
       </div>

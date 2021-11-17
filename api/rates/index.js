@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
         query: req.query
     });
     const key = req.query.key;
-    const quantity = parseInt(req.query.quantity, 10);
+    const quantity = Math.min(parseInt(req.query.quantity, 10), 30000);
 
     if ( key !== '123' || !quantity || isNaN(quantity) || quantity < 0) {
 

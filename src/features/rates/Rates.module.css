@@ -4,10 +4,10 @@
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  background-color:#F2F2F2;
+  background-color:#F4F4F4;
   font-size: 14px;
   position: relative;
-  color: #F29544;
+  color: #0367A6;
 }
 
 .title {
@@ -35,8 +35,8 @@
 }
 
 .header {
-  background-color: #BFB99B;
-  color: #F2F2F2;
+  background-color: #048ABF;
+  color: #F4F4F4;
   text-transform: uppercase;
   padding: 3px;
 }
