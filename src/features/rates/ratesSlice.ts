@@ -126,7 +126,7 @@ function* doSomeWorkload() {
   const newSorted3 = newSorted2?.sort((a, b) => (a.timestamp / a.value) - (b.timestamp / b.value));
   const newSorted4 = newSorted3?.sort((a, b) => (a.subValue / a.timestamp) - (b.subValue / b.timestamp));
   console.log('end doSomeWorkload')
-
+  return newSorted4
 }
 
 function* onFetchRatesSaga() {

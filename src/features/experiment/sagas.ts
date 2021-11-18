@@ -1,16 +1,16 @@
-import { fork, call, delay } from 'redux-saga/effects';
+import {  call, delay } from 'redux-saga/effects';
 
 function* fetchAll() {
   console.log(`start fetchAll`)
-  const task1: void = yield fork(fetchResource, 'users');
-  const task2: void = yield fork(fetchResource, 'comments');
+  // const task1: void = yield fork(fetchResource, 'users');
+  // const task2: void = yield fork(fetchResource, 'comments');
 
   yield delay(1000);
 
   console.log(`end fetchAll`)
 }
 
-function* fetchResource(resource: string) {
+export function* fetchResource(resource: string) {
   console.log(`start ${resource}`)
 
   yield delay(500)
