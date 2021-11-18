@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { put, delay, takeEvery, debounce } from 'redux-saga/effects';
+import { put, delay, takeEvery, debounce, select } from 'redux-saga/effects';
 import { RootState } from '../../app/store';
 import { fetchRates, submitRateApi } from './ratesApi';
 
@@ -38,7 +38,7 @@ export interface RateState {
 };
 
 const initialState: RateState = {
-  quantity: 123,
+  quantity: 1500,
   status: 'idle',
   rates: [],
   selectedRate: null,
@@ -67,12 +67,9 @@ export const getRates = createAsyncThunk(
 export const submitRate = createAsyncThunk(
   'rates/submitRate',
   async (rate: ISubmitRate) => {
-    console.log(rate)
-
     return await submitRateApi(rate as any as ISubmitRate);
   }
 )
-
 
 export const weatherSlice = createSlice({
   name: "Weather",
@@ -120,6 +117,18 @@ export const selectSelectedRate = (state: RootState) => state.rates.selectedRate
 export const selectIsAddRateVisible = (state: RootState) => state.rates.isAddRateVisible;
 
 
+function* doSomeWorkload() {
+  console.log('start doSomeWorkload')
+  const rates: IRate[] = yield select(selectRates);
+  if (!rates) return;
+  const newSorted = [...rates].sort((a, b) => ((a.timestamp / a.subValue / a.value) - (b.timestamp / b.subValue / b.value)));
+  const newSorted2 = newSorted?.sort((a, b) => (a.subValue / a.value) - (b.subValue / b.value));
+  const newSorted3 = newSorted2?.sort((a, b) => (a.timestamp / a.value) - (b.timestamp / b.value));
+  const newSorted4 = newSorted3?.sort((a, b) => (a.subValue / a.timestamp) - (b.subValue / b.timestamp));
+  console.log('end doSomeWorkload')
+
+}
+
 function* onFetchRatesSaga() {
   yield delay(15000);
   yield put(getRates() as any);
@@ -131,6 +140,8 @@ function* onUpdateQuantity() {
 
 export function* fetchRatesSaga() {
   yield takeEvery(getRates.fulfilled, onFetchRatesSaga);
+  yield takeEvery(getRates.fulfilled, doSomeWorkload);
+  yield debounce(100, getRates.fulfilled, doSomeWorkload);
   yield debounce(500, updateQuantity, onUpdateQuantity)
 }
 

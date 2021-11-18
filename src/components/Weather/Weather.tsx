@@ -2,7 +2,7 @@
 import styles from './Weather.module.css';
 import React, { ChangeEvent } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectStatus, selectCountry, selectCity, selectForecast, changeLocation } from './weatherSlice';
+import { selectStatus, selectCountry, selectCity, selectForecast, changeLocation } from '../../features/weather/weatherSlice';
 import countries from '../../common/countries.json';
 import { Spinner } from '../../components/Spinner';
 

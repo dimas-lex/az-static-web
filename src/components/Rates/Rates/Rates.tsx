@@ -1,10 +1,10 @@
 
 import styles from './Rates.module.css';
 import React, { ChangeEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectStatus, selectRates, selectQuantity, updateQuantity } from './ratesSlice';
-import { Rate } from './Rate';
-import { ProgressBar } from '../../components/ProgressBar/ProgressBar';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { selectStatus, selectRates, selectQuantity, updateQuantity } from '../../../features/rates/ratesSlice';
+import { RateRow } from '../RateRow';
+import { ProgressBar } from '../../ProgressBar/ProgressBar';
 
 export const Rates = ({className}: {className?: string}) => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export const Rates = ({className}: {className?: string}) => {
   };
 
   return (
-    <div className={`${styles.rates} ${className || ''}`}>
+    <div className={`${styles.rates} ${className || ''} cy-rates`}>
       <div className={styles.title}>
         Rates Info for
         <input className={styles.input} type="number" name="quantity" value={quantity} onChange={onChangeQuantity} />
@@ -36,20 +36,20 @@ export const Rates = ({className}: {className?: string}) => {
         {
           rates && (
 
-            <table className={styles.table}>
+            <table className={`${styles.table} cy-rates-table`}>
               <tbody>
                 <tr>
-                  <th className={styles.header} >id</th>
-                  <th className={styles.header}>betaId</th>
-                  <th className={styles.header}>name</th>
-                  <th className={styles.header}>value</th>
-                  <th className={styles.header}>currency</th>
-                  <th className={styles.header}>timestamp</th>
+                  <th className={`${styles.header} cy-rates-header`}>id</th>
+                  <th className={`${styles.header} cy-rates-header`}>betaId</th>
+                  <th className={`${styles.header} cy-rates-header`}>name</th>
+                  <th className={`${styles.header} cy-rates-header`}>value</th>
+                  <th className={`${styles.header} cy-rates-header`}>currency</th>
+                  <th className={`${styles.header} cy-rates-header`}>timestamp</th>
                 </tr>
                 {
                   rates?.map(rate => {
                     return (
-                      <Rate key={rate.id} rate={rate} />
+                      <RateRow key={rate.id} rate={rate} />
                     )
                   })
                 }

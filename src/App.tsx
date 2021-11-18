@@ -1,14 +1,14 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { Weather } from './features/weather/Weather';
-import { Rates } from './features/rates/Rates';
+import { Weather } from './components/Weather';
+import { Rates } from './components/Rates/Rates/Rates';
 import { getWeatherForecast } from './features/weather/weatherSlice';
 import { getRates, selectIsAddRateVisible, selectSelectedRate } from './features/rates/ratesSlice';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { RateDetail } from './features/rates/RateDetail';
+import { RateDetail } from './components/Rates/RateDetail';
 import { selectIsLoading } from './app/selectors';
 import { ProgressBar } from './components/ProgressBar';
-import { AddRate } from './features/rates/AddRate';
+import { AddRate } from './components/Rates/AddRate';
 
 function App() {
   const dispatch = useAppDispatch();

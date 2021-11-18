@@ -2,15 +2,12 @@ import styles from './AddRate.module.css';
 import React from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from '../../../app/hooks';
-import { toggleAddRateVisibility, ISubmitRate, submitRate } from '../ratesSlice';
+import { toggleAddRateVisibility, ISubmitRate, submitRate } from '../../../features/rates/ratesSlice';
 import { Dialog } from '@blueprintjs/core';
 
-
-
-
 const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-export const AddRate = ({isOpen}: {isOpen: boolean}) => {
 
+export const AddRate = ({isOpen}: {isOpen: boolean}) => {
   const dispatch = useAppDispatch();
   const handleClose= () => {
     dispatch(toggleAddRateVisibility());
@@ -21,11 +18,12 @@ export const AddRate = ({isOpen}: {isOpen: boolean}) => {
 
   return (
 
-    <Dialog  isOpen={isOpen} onClose={handleClose}
+    <Dialog
+      isOpen={isOpen}
       title={<h1>Submit Form</h1>}
+      onClose={handleClose}
     >
-
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={`${styles.form} add-rate-form`} onSubmit={handleSubmit(onSubmit)}>
         <input className={`${styles.input} input-firstName`} placeholder="First name" {...register("firstName", { required: true, maxLength: 20 })} />
         <input className={`${styles.input} input-lastName`} placeholder="Last  name"  {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
         <input className={`${styles.input} input-value`} placeholder="Your value"  type="number" {...register("value", { min: 1, max: 9999 })} />
