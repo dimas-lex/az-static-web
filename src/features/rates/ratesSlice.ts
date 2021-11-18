@@ -19,6 +19,13 @@ export interface ISubmitRate {
   lastName: string;
   email: string;
   value: number;
+  subValue: number;
+  subValue1: number;
+  subValue2: number;
+  subValue3: number;
+  subValue4: number;
+  subValue5: number;
+  subValue6: number;
   age: number;
   phone: number;
 }
