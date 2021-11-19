@@ -17,10 +17,10 @@ describe('example to-do app', () => {
     // so we must tell it to visit our website with the `cy.visit()` command.
     // Since we want to visit the same URL at the start of all our tests,
     // we include it in our beforeEach function so that it runs before each test
-    cy.visit('/')
+    cy.visit('/');
   })
 
-  it('displays two todo items by default', () => {
+  xit('displays two todo items by default', () => {
     cy.get('.App').should('have.length', 1).should('be.visible');
     cy.get('.weather').should('have.length', 1).should('be.visible');
     cy.get('.weather-title').should('have.length', 1).should('be.visible');
@@ -28,14 +28,44 @@ describe('example to-do app', () => {
     cy.get('.AppRates').should('have.length', 1).should('be.visible');
     cy.get('.cy-rates').should('have.length', 1).should('be.visible');
     cy.get('.cy-rates-table').should('have.length', 1).should('be.visible');
-    cy.get('.cy-rate-row').should('have.length', 123).should('be.visible');
-    cy.contains('Clear completed').should('not.exist')
+    cy.get('.cy-rate-quantity').should('have.length', 1).should('be.visible');
+    cy.get('.cy-rate-row').should('have.length', 1500).should('be.visible');
+    cy.get('.add-rate-form').should('not.exist')
 
   })
 
-  it('can add new todo items', () => {
+  it('can change quantity', () => {
+    const quantity = 14000;
 
-      cy.contains('Clear completed').should('not.exist')
+    cy.get('.App').should('have.length', 1).should('be.visible');
+    cy.intercept('GET', '/api/rates?quantity=*').as('APIrates');
+    cy.get('.cy-rate-quantity')
+      .should('be.visible')
+      .clear()
+      .type(quantity)
+      .then(() => {
+        cy.get('.cy-progress-bar').should('be.visible');
+        cy.wait('@APIrates')
+        cy.get('.cy-progress-bar').should('not.exist');
+        cy.get('.cy-rate-row')
+          .should('be.visible')
+          .should('have.length', quantity)
+      })
+      cy.get('.cy-rate-quantity')
+      .should('be.visible')
+      .clear()
+      .type(9000)
+    cy.get('.add-rate-form').should('not.exist');
+  });
 
-  })
+  it('can open rate', () => {
+    cy.get('.App').should('have.length', 1).should('be.visible');
+    cy.get('.cy-rate-row')
+      .as('row')
+      .then(($row) => {
+        cy.get('@row').first().click();
+        cy.get('.cy-rateDetail-box').should('be.visible')
+
+      })
+  });
 })

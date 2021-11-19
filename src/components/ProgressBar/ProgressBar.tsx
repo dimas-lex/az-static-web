@@ -8,7 +8,7 @@ export const ProgressBar = ({ isVisible }: { isVisible?: boolean }) => {
   return (
     isVisible ?
       (
-        <div className={styles.progressBar}>
+        <div className={`${styles.progressBar} cy-progress-bar`}>
           <Progress intent={Intent.PRIMARY} />
         </div>
       )

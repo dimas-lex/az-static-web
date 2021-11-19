@@ -21,7 +21,7 @@ export const Rates = ({className}: {className?: string}) => {
     <div className={`${styles.rates} ${className || ''} cy-rates`}>
       <div className={styles.title}>
         Rates Info for
-        <input className={styles.input} type="number" name="quantity" value={quantity} onChange={onChangeQuantity} />
+        <input className={`${styles.input} cy-rate-quantity`} type="number" name="quantity" value={quantity} onChange={onChangeQuantity} />
       </div>
       <div className={styles.status}>
         {
