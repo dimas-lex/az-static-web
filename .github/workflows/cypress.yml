@@ -1,0 +1,38 @@
+name: main
+on: [push]
+jobs:
+  build-and-test-node14:
+    runs-on: ubuntu-20.04
+    name: Node14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - uses: bahmutov/npm-install@v1
+      - run: npm run format
+      - run: npm run build
+      - run:
+      - run: npm test
+      - run: npm run check:markdown
+
+           # store screenshot captured during the test
+      - uses: actions/upload-artifact@v2
+        with:
+          name: screenshots-in-electron
+          path: examples/chrome/cypress/screenshots
+
+      - run: npx image-size cypress/screenshots/**/*.png
+        working-directory: examples/chrome
+
+      - name: Chrome
+        uses: ./
+        with:
+          working-directory: examples/chrome
+          browser: chrome
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: screenshots-in-chrome
+          path: examples/chrome/cypress/screenshots
