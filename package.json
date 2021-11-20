@@ -24,6 +24,9 @@
   },
   "scripts": {
     "cy:open": "cypress open",
+    "start:services": "npm run start & (cd api/ && npm run start)",
+    "start:proxy": "swa start http://localhost:3000 --api-location http://localhost:7071",
+    "start:ci": "npm run start:services & npm run start:proxy & wait-on http://localhost:4280",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -45,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "cypress": "8.3.0"
+    "cypress": "8.3.0",
+    "wait-on": "^6.0.0"
   }
 }
