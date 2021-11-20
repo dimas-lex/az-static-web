@@ -16,23 +16,19 @@ jobs:
       - run:
       - run: npm test
       - run: npm run check:markdown
-
-           # store screenshot captured during the test
+      # store screenshot captured during the test
       - uses: actions/upload-artifact@v2
         with:
           name: screenshots-in-electron
-          path: examples/chrome/cypress/screenshots
-
+          path: ./cypress/screenshots
       - run: npx image-size cypress/screenshots/**/*.png
-        working-directory: examples/chrome
-
+        working-directory: ./
       - name: Chrome
         uses: ./
         with:
-          working-directory: examples/chrome
+          working-directory: ./
           browser: chrome
-
       - uses: actions/upload-artifact@v2
         with:
           name: screenshots-in-chrome
-          path: examples/chrome/cypress/screenshots
+          path: ./cypress/screenshots
