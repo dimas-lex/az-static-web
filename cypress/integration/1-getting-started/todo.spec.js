@@ -20,7 +20,7 @@ describe('example to-do app', () => {
     cy.visit('/');
   })
 
-  xit('displays two todo items by default', () => {
+  it('displays two todo items by default', () => {
     cy.get('.App').should('have.length', 1).should('be.visible');
     cy.get('.weather').should('have.length', 1).should('be.visible');
     cy.get('.weather-title').should('have.length', 1).should('be.visible');
@@ -30,7 +30,8 @@ describe('example to-do app', () => {
     cy.get('.cy-rates-table').should('have.length', 1).should('be.visible');
     cy.get('.cy-rate-quantity').should('have.length', 1).should('be.visible');
     cy.get('.cy-rate-row').should('have.length', 1500).should('be.visible');
-    cy.get('.add-rate-form').should('not.exist')
+    cy.get('.add-rate-form').should('not.exist');
+    cy.screenshot('displays two todo items by default #1');
 
   })
 
@@ -49,12 +50,14 @@ describe('example to-do app', () => {
         cy.get('.cy-progress-bar').should('not.exist');
         cy.get('.cy-rate-row')
           .should('be.visible')
-          .should('have.length', quantity)
+          .should('have.length', quantity);
+          cy.screenshot('can change quantity #1');
       })
       cy.get('.cy-rate-quantity')
       .should('be.visible')
       .clear()
       .type(9000)
+      cy.screenshot('can change quantity #2');
     cy.get('.add-rate-form').should('not.exist');
   });
 
@@ -64,8 +67,8 @@ describe('example to-do app', () => {
       .as('row')
       .then(($row) => {
         cy.get('@row').first().click();
-        cy.get('.cy-rateDetail-box').should('be.visible')
-
+        cy.get('.cy-rateDetail-box').should('be.visible');
+        cy.screenshot('can open rate');
       })
   });
 })
