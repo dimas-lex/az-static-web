@@ -12,11 +12,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         timeout-minutes: 10
+        uses: ./
         with:
-          start: |
-            npm run start
-            npm run start:api
-            npm run start:proxy
+          working-directory: ./
+          start: npm run start, npm run start:api, npm run start:proxy
           wait-on: 'http://localhost:4280'
           # wait for 2 minutes for the server to respond
           wait-on-timeout: 120
