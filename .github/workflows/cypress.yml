@@ -11,11 +11,11 @@ jobs:
         with:
           node-version: '14'
       - uses: bahmutov/npm-install@v1
-      - run: npm run format
-      - run: npm run build
-      - run:
-      - run: npm test
-      - run: npm run check:markdown
+        - run: npm run format
+        - run: npm run build
+        - run:
+        - run: npm test
+        - run: npm run check:markdown
       # store screenshot captured during the test
       - uses: actions/upload-artifact@v2
         with:
