@@ -1,34 +1,23 @@
 name: main
 on: [push]
 jobs:
-  build-and-test-node14:
+  cypress-run:
     runs-on: ubuntu-20.04
-    name: Node14
+    # let's make sure our tests pass on Chrome browser
+    name: E2E on Chrome
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+        uses: actions/checkout@v1
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        timeout-minutes: 10
         with:
-          node-version: '14'
-      - uses: bahmutov/npm-install@v1
-        - run: npm run format
-        - run: npm run build
-        - run:
-        - run: npm test
-        - run: npm run check:markdown
-      # store screenshot captured during the test
-      - uses: actions/upload-artifact@v2
-        with:
-          name: screenshots-in-electron
-          path: ./cypress/screenshots
-      - run: npx image-size cypress/screenshots/**/*.png
-        working-directory: ./
-      - name: Chrome
-        uses: ./
-        with:
-          working-directory: ./
+          start: |
+            npm run start
+            npm run start:api
+            npm run start:proxy
+          wait-on: 'http://localhost:4280'
+          # wait for 2 minutes for the server to respond
+          wait-on-timeout: 120
           browser: chrome
-      - uses: actions/upload-artifact@v2
-        with:
-          name: screenshots-in-chrome
-          path: ./cypress/screenshots
