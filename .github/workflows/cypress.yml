@@ -14,8 +14,8 @@ jobs:
         timeout-minutes: 10
         with:
           working-directory: ./
-          start: npm run start, npm run start:api, npm run start:proxy
-          wait-on: 'http://localhost:4280'
+          start: npm run start:ci
+          wait-on: 'http://localhost:3001'
           # wait for 2 minutes for the server to respond
           wait-on-timeout: 120
           browser: chrome
