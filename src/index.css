@@ -1,10 +1,21 @@
 @import "~normalize.css";
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 
+:root {
+  --primary: #5D768C;
+  --secondary: #734124;
+  --tertiary: #F25C5C;
+  --white: #F2F2F2;
+  --black: #0D0D0D;
+}
+
+
 body {
   margin: 0;
   font-family: 'Fira Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--white);
 }
+
 
