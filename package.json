@@ -23,11 +23,14 @@
     "typescript": "^4.1.6"
   },
   "scripts": {
+    "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "start:services": "npm run start & (cd api/ && npm run start)",
-    "start:proxy": "swa start http://localhost:3000 --api-location http://localhost:7071  --host 3001 ",
-    "start:ci": "npm run start:services & npm run start:proxy & wait-on http://localhost:4280",
-    "start": "react-scripts start",
+    "start:all": "npm run start:ui & npm run start:services & npm run start:proxy",
+    "start:ci": "npm run start:all & wait-on http://localhost:4280",
+    "start:proxy": "swa start http://localhost:3000 --api-location http://localhost:7071  ",
+    "start:services": "cd api/ && npm run start",
+    "start:ui": "react-scripts start",
+    "start": "npm run start:all",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

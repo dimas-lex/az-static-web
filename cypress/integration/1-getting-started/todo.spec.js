@@ -36,7 +36,7 @@ describe('example to-do app', () => {
   })
 
   it('can change quantity', () => {
-    const quantity = 14000;
+    const quantity = 5000;
 
     cy.get('.App').should('have.length', 1).should('be.visible');
     cy.intercept('GET', '/api/rates?quantity=*').as('APIrates');
@@ -56,7 +56,7 @@ describe('example to-do app', () => {
       cy.get('.cy-rate-quantity')
       .should('be.visible')
       .clear()
-      .type(9000)
+      .type(100)
       cy.screenshot('can change quantity #2');
     cy.get('.add-rate-form').should('not.exist');
   });
